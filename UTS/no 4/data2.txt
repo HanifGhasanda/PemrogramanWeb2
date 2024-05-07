@@ -1,0 +1,48 @@
+<?php
+// Ambil data dari form
+$nama = $_POST['nama'];
+$pertandingan = $_POST['pertandingan'];
+$menang = $_POST['menang'];
+$seri = $_POST['seri'];
+$kalah = $_POST['kalah'];
+$operator = $_POST['operator'];
+$nim = $_POST['nim'];
+
+// Hitung poin
+$poin = ($menang * 3) + $seri;
+
+// Cek apakah file data.txt sudah ada, jika tidak, buat file baru
+if (!file_exists("data2.txt")) {
+    $file = fopen("data2.txt", "w") or die("Tidak bisa membuat file.");
+    fclose($file);
+}
+
+// Simpan data ke dalam file
+$data = "Nama Negara: $nama\nJumlah Pertandingan: $pertandingan\nJumlah Menang: $menang\nJumlah Seri: $seri\nJumlah Kalah: $kalah\nPoin: $poin\nNama Operator: $operator\nNIM Mahasiswa: $nim\n\n";
+
+$file = fopen("data2.txt", "a") or die("Tidak bisa membuka file.");
+fwrite($file, $data);
+fclose($file);
+
+// Baca data dari file
+$file_contents = file_get_contents("data2.txt");
+$data_lines = explode("\n\n", $file_contents);
+
+// Tampilkan data dalam bentuk tabel
+echo "<h2>Data Pertandingan</h2>";
+echo "<table border='1'>";
+echo "<tr><th>Nama Negara</th><th>Jumlah Pertandingan</th><th>Jumlah Menang</th><th>Jumlah Seri</th><th>Jumlah Kalah</th><th>Poin</th><th>Nama Operator</th><th>NIM Mahasiswa</th></tr>";
+foreach ($data_lines as $line) {
+    $fields = explode("\n", $line);
+    echo "<tr>";
+    foreach ($fields as $field) {
+        $parts = explode(": ", $field);
+        echo "<td>" . end($parts) . "</td>";
+    }
+    echo "</tr>";
+}
+echo "</table>";
+?>
+Malaysia U-23,4,1,0,3,3,andika,339110
+Kuwait U-23,3,2,0,1,6,haha,6677788
+Kuwait U-23,4,2,2,0,8,Muhammad Hanif Ghasanda,211011400789
