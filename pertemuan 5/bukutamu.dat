@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+  Nama: <input type="text" name="Nama" required><br><br>
+  Email: <input type="email" name="Email" required><br><br>
+  <label for="komentar">Komentar:</label><br>
+  <textarea id="komentar" name="komentar" rows="4" cols="50"></textarea><br><br>
+  <input type="submit" value="Simpan">
+</form>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Mengambil data dari form
+    $nama = htmlspecialchars($_POST["Nama"]);
+    $email = htmlspecialchars($_POST["Email"]);
+    $komentar = htmlspecialchars($_POST["komentar"]);
+
+    // Membuka file bukutamu.dat dan menulis data
+    $file = fopen("bukutamu.dat", "a");
+    fwrite($file, "Nama: $nama\n");
+    fwrite($file, "Email: $email\n");
+    fwrite($file, "Komentar: $komentar\n\n");
+    fclose($file);
+
+    // Menampilkan data yang telah disimpan
+    echo "<h2>Data yang Dikirim</h2>";
+    echo "Nama: $nama <br>";
+    echo "Email: $email <br>";
+    echo "Komentar: $komentar <br>";
+}
+?>
+
+</body>
+</html>
+Nama: hanifah
+Email: hanifghasanda03@gmail.com
+Komentar: aku suka the comment
+
